@@ -25,11 +25,12 @@ public class ApiDbContext : DbContext
         public DbSet<TipoDireccion> TipoDireccione{ get; set; }
         public DbSet<TipoPersona> TipoPersonas { get; set; }
         public DbSet<Turno> Turnos { get; set; }
+        public DbSet<EmpleadoContrato> EmpleadoContratos { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
+            modelBuilder.Entity<EmpleadoContrato>().HasKey(n=> new {n.EmpleadoId,n.ContratoId});
         }
 
 }

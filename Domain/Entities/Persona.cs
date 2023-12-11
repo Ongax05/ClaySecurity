@@ -20,5 +20,6 @@ namespace Domain.Entities
         public ICollection<DireccionPersona> DireccionPersonas { get; set; }
         public ICollection<Contrato> Contratos { get; set; }
         public ICollection<Programacion> Programaciones { get; set; }
+        public ICollection<EmpleadoContrato> EmpleadoContratos { get; set; }
     }
 }

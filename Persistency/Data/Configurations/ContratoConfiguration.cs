@@ -14,7 +14,6 @@ namespace Persistency.Data.Configurations
         {
             builder.ToTable("Contrato");
             builder.HasOne(p=>p.Cliente).WithMany(p=>p.Contratos).HasForeignKey(p=>p.ClienteId);
-            builder.HasOne(p=>p.Empleado).WithMany(p=>p.Contratos).HasForeignKey(p=>p.EmpleadoId);
             builder.Property(p=>p.FechaContrato).HasColumnName("FechaContrato").HasColumnType("datetime").IsRequired();
             builder.Property(p=>p.FechaVencimiento).HasColumnName("FechaVencimiento").HasColumnType("datetime").IsRequired();
             builder.HasOne(p=>p.EstadoContrato).WithMany(p=>p.Contratos).HasForeignKey(p=>p.EstadoContratoId);
