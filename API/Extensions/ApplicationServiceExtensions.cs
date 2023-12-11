@@ -20,9 +20,9 @@ public static class ApplicationServiceExtensions
         services.AddCors(options =>
         {
             options.AddPolicy("CorsPolicy", builder =>
-                builder.AllowAnyOrigin()    //WithOrigins("https://domain.com")
-                    .WithMethods("GET")
-                    .AllowAnyHeader());     //WithHeaders("accept","content-type")
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
         });
         public static void ConfigureApiVersioning (this IServiceCollection services)
         {
@@ -105,7 +105,7 @@ public static class ApplicationServiceExtensions
                     new()
                     {
                         Endpoint = "*",
-                        Limit = 2,
+                        Limit = 4,
                         Period = "15s"
                     }
                 };
