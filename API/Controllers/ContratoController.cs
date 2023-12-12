@@ -1,5 +1,6 @@
 using API.Dtos;
 using API.Helpers;
+using Aplication.UnitOfWork;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
@@ -40,13 +41,37 @@ namespace API.Controllers
         throw new NotImplementedException();
         }
         
-        [HttpGet]
-        [MapToApiVersion("1.1")]
-        public async Task<ActionResult<IEnumerable<ContratoDto>>> Get1_1()
+        [HttpGet("GetContratosActivos")]
+        [MapToApiVersion("1.0")]
+        public async Task<ActionResult<Pager<NumeroDeContratoEInvolucradosDto>>> GetContratosActivos(
+            [FromQuery] Params ContratoParams
+        )
         {
-            var registers = await _unitOfWork.Contratos.GetAllAsync();
-            var ContratoListDto = _mapper.Map<List<ContratoDto>>(registers);
-            return ContratoListDto;
+            var (totalRegisters, registers) = await _unitOfWork.Contratos.GetContratosActivos(
+                ContratoParams.PageIndex,
+                ContratoParams.PageSize
+            );
+
+            List<NumeroDeContratoEInvolucradosDto> Nci = [];
+
+            foreach(var r in registers)
+            {
+                var nombreEmpleado = await _unitOfWork.Contratos.GetNombreEmpleadoPorIdDeContrato(r.Id);
+                var newR = new NumeroDeContratoEInvolucradosDto()
+                {
+                    ContratoId = r.Id,
+                    NombreCliente = r.Cliente.Nombre,
+                    NombreEmpleado = nombreEmpleado
+                };
+                Nci.Add(newR);
+            }
+
+            return new Pager<NumeroDeContratoEInvolucradosDto>(
+                Nci,
+                totalRegisters,
+                ContratoParams.PageIndex,
+                ContratoParams.PageSize
+            );
         }
         
         [HttpPost]

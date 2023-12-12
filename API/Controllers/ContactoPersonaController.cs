@@ -35,18 +35,32 @@ namespace API.Controllers
             );
         }
         
+        [HttpGet("GetContactoDeVigilantes")]
+        [MapToApiVersion("1.0")]
+        public async Task<ActionResult<Pager<ContactoPersonaDto>>> GetContactoDeVigilantes(
+            [FromQuery] Params ContactoPersonaParams
+        )
+        {
+            if (ContactoPersonaParams == null)
+            {
+                return BadRequest(new ApiResponse(400, "Params cannot be null"));
+            }
+            var (totalRegisters, registers) = await _unitOfWork.ContactoPersonas.GetContactoDeVigilantes(
+                ContactoPersonaParams.PageIndex,
+                ContactoPersonaParams.PageSize
+            );
+            var ContactoPersonaListDto = _mapper.Map<List<ContactoPersonaDto>>(registers);
+            return new Pager<ContactoPersonaDto>(
+                ContactoPersonaListDto,
+                totalRegisters,
+                ContactoPersonaParams.PageIndex,
+                ContactoPersonaParams.PageSize
+            );
+        }
+
         private ActionResult<Pager<ContactoPersonaDto>> BadRequest(ApiResponse apiResponse)
         {
         throw new NotImplementedException();
-        }
-        
-        [HttpGet]
-        [MapToApiVersion("1.1")]
-        public async Task<ActionResult<IEnumerable<ContactoPersonaDto>>> Get1_1()
-        {
-            var registers = await _unitOfWork.ContactoPersonas.GetAllAsync();
-            var ContactoPersonaListDto = _mapper.Map<List<ContactoPersonaDto>>(registers);
-            return ContactoPersonaListDto;
         }
         
         [HttpPost]

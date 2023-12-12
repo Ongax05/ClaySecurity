@@ -8,6 +8,7 @@ namespace Domain.Interfaces
 {
     public interface IContrato : IGenericRepository<Contrato>
     {
-        
+        Task<(int totalRegisters, IEnumerable<Contrato> registers)> GetContratosActivos (int pageIndex, int pageSize );
+        Task<string> GetNombreEmpleadoPorIdDeContrato (int Id);
     }
 }

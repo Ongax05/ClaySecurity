@@ -46,15 +46,6 @@ namespace API.Controllers
         throw new NotImplementedException();
         }
         
-        [HttpGet]
-        [MapToApiVersion("1.1")]
-        public async Task<ActionResult<IEnumerable<TipoDto>>> Get1_1()
-        {
-            var registers = await _unitOfWork.TipoPersonas.GetAllAsync();
-            var TipoPersonaListDto = _mapper.Map<List<TipoDto>>(registers);
-            return TipoPersonaListDto;
-        }
-        
         [HttpPost]
         [MapToApiVersion("1.0")]
         public async Task<ActionResult<TipoPersona>> Post(TipoDto TipoDto)

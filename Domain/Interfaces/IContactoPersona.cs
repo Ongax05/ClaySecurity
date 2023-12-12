@@ -8,6 +8,6 @@ namespace Domain.Interfaces
 {
     public interface IContactoPersona : IGenericRepository<ContactoPersona>
     {
-        
+        Task<(int totalRegisters, IEnumerable<ContactoPersona> registers)> GetContactoDeVigilantes (int pageIndex, int pageSize );
     }
 }

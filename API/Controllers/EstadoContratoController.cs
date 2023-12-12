@@ -46,14 +46,7 @@ namespace API.Controllers
         throw new NotImplementedException();
         }
         
-        [HttpGet]
-        [MapToApiVersion("1.1")]
-        public async Task<ActionResult<IEnumerable<EstadoContratoDto>>> Get1_1()
-        {
-            var registers = await _unitOfWork.EstadoContratos.GetAllAsync();
-            var EstadoContratoListDto = _mapper.Map<List<EstadoContratoDto>>(registers);
-            return EstadoContratoListDto;
-        }
+
         
         [HttpPost]
         [MapToApiVersion("1.0")]
