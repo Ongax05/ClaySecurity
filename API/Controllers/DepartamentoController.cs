@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [Authorize(Roles = "Admin,Manager,Employee")]
     public class DepartamentoController : ApiBaseController
     {
         private readonly IUnitOfWork _unitOfWork;

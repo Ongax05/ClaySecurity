@@ -10,6 +10,7 @@ namespace API.Controllers;
 
 public class UserController : ApiBaseController
 {
+    [Authorize(Roles = "Admin,Manager,Employee")]
     private readonly IUserService _userService;
 
     public UserController(IUserService userService)

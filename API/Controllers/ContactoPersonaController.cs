@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [Authorize(Roles = "Admin,Manager,Employee")]
     public class ContactoPersonaController(IUnitOfWork unitOfWork, IMapper mapper) : ApiBaseController
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
